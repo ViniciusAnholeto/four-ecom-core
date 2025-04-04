@@ -23,7 +23,7 @@ public interface ProductsControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    ProductResponse createProduct(ProductRequest product);
+    ProductResponse createOrUpdateProduct(ProductRequest product);
 
     @Operation(summary = "Buscar produto",
             description = "Endpoint para buscar um produto no sistema de ecommerce."
@@ -38,4 +38,18 @@ public interface ProductsControllerDoc {
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
     ProductResponse getProduct(Long id);
+
+    @Operation(summary = "Deletar produto",
+            description = "Endpoint para deletar um produto no sistema de ecommerce."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200", description = "Em casos de sucesso na requisicao."),
+            @ApiResponse(responseCode = "400", description = "Em casos de parametros errados ou faltantes.", content = @Content()),
+            @ApiResponse(responseCode = "401", description = "Em casos de requisição não autorizada.", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Em casos de requisição não processada.", content = @Content()),
+            @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
+            @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
+    })
+    void deleteProduct(Long id);
 }
