@@ -1,0 +1,57 @@
+info:
+  app:
+    name: '@project.name@'
+    description: '@project.description@'
+    version: '@project.version@'
+    groupId: "@project.groupId@"
+    artifactId: "@project.artifactId@"
+    java: "@java.version@"
+
+server:
+    port: 8080
+    servlet:
+      context-path: "/@project.artifactId@"
+
+spring:
+  banner:
+    location: classpath:/banner.txt
+  ci:
+    ambiente: "TESTE"
+    secrets: "test"
+  config:
+    import: optional:configtree:/mnt/secrets-store/
+  datasource:
+    url: 'jdbc:sqlserver://${configs.database.server};databaseName=SQLCHATMS006SESSAOCR;'
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: ${configs.database.usr}
+    password: ${configs.database.pwd}
+  jpa:
+    open-in-view: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  kafka:
+    producer:
+      key-serializer: 'org.apache.kafka.common.serialization.StringSerializer'
+      value-serializer: 'org.springframework.kafka.support.serializer.JsonSerializer'
+    consumer:
+      key-deserializer: 'org.apache.kafka.common.serialization.StringDeserializer'
+      value-deserializer: 'org.springframework.kafka.support.serializer.JsonDeserializer'
+    listener:
+      ack-mode: manual
+
+configs:
+  kafka:
+    group-id: ${info.app.name}
+
+logging:
+  pattern:
+    level: '%5p [${info.app.name:},%X{traceId:-},%X{spanId:-}]'
+
+#auth:
+#  jwt-expiration-ms: '300000'
+#  jwt-secret: ${key-chat-platfu-auth-jwt-secret}
+
+auth:
+  jwt-expiration-ms: '120000'
+  jwt-secret: '69df$5314%Cf5e2#4fA9b@b33d*a95e6Sb1da;e0f9c30fF3TEYbf&5aGea!4311^86fa>S49ceJc2I4Pa72SD56'
