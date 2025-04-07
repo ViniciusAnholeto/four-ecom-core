@@ -1,18 +1,18 @@
 package br.com.four.ecom.core.infrastructure.api.v1.swaggers;
 
-import br.com.four.ecom.core.infrastructure.api.v1.request.ProductRequest;
-import br.com.four.ecom.core.infrastructure.api.v1.response.ProductResponse;
+import br.com.four.ecom.core.infrastructure.api.v1.request.ReportRequest;
+import br.com.four.ecom.core.infrastructure.api.v1.response.ReportResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Produtos")
-public interface ProductsControllerDoc {
+@Tag(name = "Relatórios")
+public interface ReportsControllerDoc {
 
-    @Operation(summary = "Criar produto",
-            description = "Endpoint para criar um produto no sistema de ecommerce."
+    @Operation(summary = "Relatório de Ticket Médio",
+            description = "Endpoint para gerar um relatório de ticket médio."
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -23,10 +23,10 @@ public interface ProductsControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    ProductResponse createOrUpdateProduct(ProductRequest product);
+    ReportResponse averageTicketReport(ReportRequest reportRequest);
 
-    @Operation(summary = "Buscar produto",
-            description = "Endpoint para buscar um produto no sistema de ecommerce."
+    @Operation(summary = "Relatório Mensal",
+            description = "Endpoint para gerar um relatório mensal."
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -37,10 +37,10 @@ public interface ProductsControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    ProductResponse getProduct(Long id);
+    ReportResponse monthlyReport(ReportRequest reportRequest);
 
-    @Operation(summary = "Deletar produto",
-            description = "Endpoint para deletar um produto no sistema de ecommerce."
+    @Operation(summary = "Relatório de Melhores Compradores",
+            description = "Endpoint para gerar um relatório dos melhores compradores."
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -51,5 +51,5 @@ public interface ProductsControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    void deleteProduct(Long id);
+    ReportResponse bestBuyersReport(Integer bestBuyersCount);
 }

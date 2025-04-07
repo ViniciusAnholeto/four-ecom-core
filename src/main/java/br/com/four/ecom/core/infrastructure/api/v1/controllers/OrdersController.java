@@ -7,21 +7,21 @@ import br.com.four.ecom.core.domains.orders.resources.PayOrder;
 import br.com.four.ecom.core.infrastructure.api.v1.request.OrderRequest;
 import br.com.four.ecom.core.infrastructure.api.v1.request.PaymentRequest;
 import br.com.four.ecom.core.infrastructure.api.v1.response.OrderResponse;
-import br.com.four.ecom.core.infrastructure.api.v1.swaggers.OrderControllerDoc;
+import br.com.four.ecom.core.infrastructure.api.v1.swaggers.OrdersControllerDoc;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/ecom/v1")
 @RequiredArgsConstructor
-public class OrderController implements OrderControllerDoc {
+@RequestMapping("/ecom/v1")
+public class OrdersController implements OrdersControllerDoc {
 
-    private final CreateOrUpdateOrder createOrUpdateOrder;
-    private final FindOrder findOrder;
-    private final DeleteOrder deleteOrder;
-    private final PayOrder payOrder;
+    private CreateOrUpdateOrder createOrUpdateOrder;
+    private FindOrder findOrder;
+    private DeleteOrder deleteOrder;
+    private PayOrder payOrder;
 
     @Override
     @PostMapping("/order")

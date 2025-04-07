@@ -9,8 +9,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "API gestao Ecommerce")
-public interface OrderControllerDoc {
+@Tag(name = "Pedidos")
+public interface OrdersControllerDoc {
 
     @Operation(summary = "Criar pedido",
             description = "Endpoint para criar um pedido no sistema de ecommerce."
