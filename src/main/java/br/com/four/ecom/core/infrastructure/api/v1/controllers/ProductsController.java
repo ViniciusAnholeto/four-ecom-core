@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -32,7 +34,7 @@ public class ProductsController implements ProductsControllerDoc {
 
     @Override
     @GetMapping("/product/{id}")
-    public ProductResponse getProduct(@PathVariable Long id) {
+    public ProductResponse getProduct(@PathVariable UUID id) {
 
         log.info("Product ID received: {} - getProduct", id);
 
@@ -41,7 +43,7 @@ public class ProductsController implements ProductsControllerDoc {
 
     @Override
     @DeleteMapping("/product/{id}")
-    public void deleteProduct(@PathVariable Long id) {
+    public void deleteProduct(@PathVariable UUID id) {
 
         log.info("Product ID received: {} - deleteProduct", id);
 
