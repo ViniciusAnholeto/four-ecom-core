@@ -4,10 +4,11 @@ import br.com.four.ecom.core.domains.products.inputs.ProductInput;
 import lombok.Data;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Data
 public class ProductRequest {
-    private Long id;
+    private UUID id;
     private String name;
     private Double price;
     private String description;

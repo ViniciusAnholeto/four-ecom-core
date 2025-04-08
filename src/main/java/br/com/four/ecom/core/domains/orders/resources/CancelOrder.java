@@ -1,5 +1,5 @@
 package br.com.four.ecom.core.domains.orders.resources;
 
-public interface DeleteOrder {
+public interface CancelOrder {
     void execute(Long id);
 }

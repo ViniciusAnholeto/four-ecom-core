@@ -1,16 +1,19 @@
 package br.com.four.ecom.core.infrastructure.api.v1.controllers;
 
 import br.com.four.ecom.core.domains.orders.resources.CreateOrUpdateOrder;
-import br.com.four.ecom.core.domains.orders.resources.DeleteOrder;
+import br.com.four.ecom.core.domains.orders.resources.CancelOrder;
 import br.com.four.ecom.core.domains.orders.resources.FindOrder;
 import br.com.four.ecom.core.domains.orders.resources.PayOrder;
 import br.com.four.ecom.core.infrastructure.api.v1.request.OrderRequest;
 import br.com.four.ecom.core.infrastructure.api.v1.request.PaymentRequest;
 import br.com.four.ecom.core.infrastructure.api.v1.response.OrderResponse;
 import br.com.four.ecom.core.infrastructure.api.v1.swaggers.OrdersControllerDoc;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -20,12 +23,12 @@ public class OrdersController implements OrdersControllerDoc {
 
     private CreateOrUpdateOrder createOrUpdateOrder;
     private FindOrder findOrder;
-    private DeleteOrder deleteOrder;
+    private CancelOrder cancelOrder;
     private PayOrder payOrder;
 
     @Override
     @PostMapping("/order")
-    public OrderResponse createOrUpdateOrder(@RequestBody OrderRequest orderRequest) {
+    public OrderResponse createOrUpdateOrder(@RequestBody @Valid OrderRequest orderRequest) {
 
         log.info("Creating or updating order: {}", orderRequest);
 
@@ -33,7 +36,7 @@ public class OrdersController implements OrdersControllerDoc {
     }
 
     @Override
-    @PostMapping("/order/{id}")
+    @GetMapping("/order/{id}")
     public OrderResponse getOrder(@PathVariable Long id) {
 
         log.info("Finding order with id: {}", id);
@@ -42,27 +45,27 @@ public class OrdersController implements OrdersControllerDoc {
     }
 
     @Override
-    @DeleteMapping("/order/{id}")
-    public void deleteOrder(@PathVariable Long id) {
-
-        log.info("Deleting order with id: {}", id);
-
-        deleteOrder.execute(id);
-    }
-
-    @Override
     @GetMapping("/order/user/{user}")
-    public OrderResponse getOrderByUserId(@PathVariable Long user) {
+    public List<OrderResponse> getOrderByUserId(@PathVariable Long user) {
 
         log.info("Finding order for user with id: {}", user);
 
-        return new OrderResponse(findOrder.executeByUserCode(user));
+        return new OrderResponse().from(findOrder.executeByUserId(user));
+    }
+
+    @Override
+    @DeleteMapping("/order/{id}")
+    public void cancelOrder(@PathVariable Long id) {
+
+        log.info("Canceling order with id: {}", id);
+
+        cancelOrder.execute(id);
     }
 
     @Override
     @PostMapping("/order/payment/{id}")
     public OrderResponse paymentOrder(@PathVariable Long id,
-                                      @RequestBody PaymentRequest paymentRequest) {
+                                      @RequestBody @Valid PaymentRequest paymentRequest) {
 
         log.info("Processing payment for order with id: {}", id);
 

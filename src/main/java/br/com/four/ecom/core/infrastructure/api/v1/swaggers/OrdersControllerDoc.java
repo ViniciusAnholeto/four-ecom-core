@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import java.util.List;
+
 @Tag(name = "Pedidos")
 public interface OrdersControllerDoc {
 
@@ -52,7 +54,7 @@ public interface OrdersControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    void deleteOrder(Long id);
+    void cancelOrder(Long id);
 
     @Operation(summary = "Buscar pedido por usuario",
             description = "Endpoint para buscar um pedido por usuario no sistema de ecommerce."
@@ -66,7 +68,7 @@ public interface OrdersControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    OrderResponse getOrderByUserId(Long userId);
+    List<OrderResponse> getOrderByUserId(Long userId);
 
     @Operation(summary = "Pagar pedido",
             description = "Endpoint para pagar um pedido no sistema de ecommerce."
