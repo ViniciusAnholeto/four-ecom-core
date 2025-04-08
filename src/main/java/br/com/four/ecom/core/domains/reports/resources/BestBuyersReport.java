@@ -1,5 +1,6 @@
 package br.com.four.ecom.core.domains.reports.resources;
 
+import br.com.four.ecom.core.domains.reports.inputs.ReportInput;
 import br.com.four.ecom.core.domains.reports.models.ReportModel;
 
 public interface BestBuyersReport {
@@ -9,5 +10,5 @@ public interface BestBuyersReport {
      * @param bestBuyersCount The number of best buyers to include in the report.
      * @return best buyers report response.
      */
-    ReportModel execute(Integer bestBuyersCount);
+    ReportModel execute(Integer bestBuyersCount, ReportInput reportInput);
 }

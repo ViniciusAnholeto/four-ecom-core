@@ -19,7 +19,7 @@ public class OrderResponse {
         this.orderId = orderModel.getOrderId();
         this.userId = orderModel.getUserId();
         this.totalPrice = orderModel.getTotalPrice();
-        this.status = orderModel.getStatus();
+        this.status = orderModel.getStatus().name();
         this.products = orderModel.getProducts().stream()
                 .map(product -> OrderProductsModel.builder()
                         .productId(product.getProductId())

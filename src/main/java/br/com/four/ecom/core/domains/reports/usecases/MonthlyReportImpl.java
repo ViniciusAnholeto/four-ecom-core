@@ -1,17 +1,33 @@
 package br.com.four.ecom.core.domains.reports.usecases;
 
-import br.com.four.ecom.core.domains.reports.inputs.ReportInput;
+import br.com.four.ecom.core.domains.reports.exceptions.Exceptions.ReportGenerationFailedException;
+import br.com.four.ecom.core.domains.reports.models.MonthSalesReportModel;
 import br.com.four.ecom.core.domains.reports.models.ReportModel;
+import br.com.four.ecom.core.domains.reports.ports.DatabasePort;
 import br.com.four.ecom.core.domains.reports.resources.MonthlyReport;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
 public class MonthlyReportImpl implements MonthlyReport {
 
-    @Override
-    public ReportModel execute(ReportInput input) {
-        // Implement the logic for generating the average ticket report
-        // This is a placeholder implementation
-        System.out.println("Generating average ticket report...");
+    private final DatabasePort databasePort;
+    private final Integer month = LocalDateTime.now().getMonthValue();
 
-        return new ReportModel();
+    @Override
+    public ReportModel execute() {
+        Optional<MonthSalesReportModel> monthSalesReport = databasePort.getMonthlyReport(month);
+
+        if (monthSalesReport.isEmpty()) {
+            throw new ReportGenerationFailedException();
+        }
+
+        return ReportModel.builder()
+                .monthSalesReport(monthSalesReport)
+                .build();
     }
 }

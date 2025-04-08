@@ -18,7 +18,7 @@ public class OrderProductModel {
 
     public OrderProductInputModel toInput() {
         return OrderProductInputModel.builder()
-                .id(id)
+                .productId(id)
                 .quantity(quantity)
                 .build();
     }

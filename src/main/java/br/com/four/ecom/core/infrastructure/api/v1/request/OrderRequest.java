@@ -10,7 +10,7 @@ import javax.annotation.RegEx;
 
 @Data
 public class OrderRequest {
-    private Integer orderId;
+    private Long orderId;
 
     @NotNull(message = "User ID não pode ser nulo")
     private Long userId;

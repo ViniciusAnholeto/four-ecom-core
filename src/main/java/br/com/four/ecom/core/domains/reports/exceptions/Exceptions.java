@@ -1,0 +1,23 @@
+package br.com.four.ecom.core.domains.reports.exceptions;
+
+import br.com.four.ecom.core.domains.commons.EcomException.SynchronousException;
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
+public class Exceptions {
+
+    public static class ReportGenerationFailedException extends SynchronousException {
+
+        public ReportGenerationFailedException() {
+            super("ECOM-DR-001", "Failed to generate sales report");
+        }
+    }
+
+    public static class AverageTicketReportException extends SynchronousException {
+
+        public AverageTicketReportException(Long userId) {
+            super("ECOM-DR-002", String.format("Failed to generate sales report to user: %d", userId));
+        }
+    }
+
+}

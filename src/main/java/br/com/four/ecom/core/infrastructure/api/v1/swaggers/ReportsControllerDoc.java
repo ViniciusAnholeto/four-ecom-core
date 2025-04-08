@@ -37,7 +37,7 @@ public interface ReportsControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    ReportResponse monthlyReport(ReportRequest reportRequest);
+    ReportResponse monthlyReport();
 
     @Operation(summary = "Relatório de Melhores Compradores",
             description = "Endpoint para gerar um relatório dos melhores compradores."
@@ -51,5 +51,5 @@ public interface ReportsControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    ReportResponse bestBuyersReport(Integer bestBuyersCount);
+    ReportResponse bestBuyersReport(Integer bestBuyersCount, ReportRequest reportRequest);
 }

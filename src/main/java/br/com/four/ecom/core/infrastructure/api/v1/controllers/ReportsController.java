@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -23,21 +25,26 @@ public class ReportsController implements ReportsControllerDoc {
     @Override
     @PostMapping("/report")
     public ReportResponse averageTicketReport(@RequestBody ReportRequest reportRequest) {
-        // Implement the logic to generate the report based on the request
+
+        log.info("Generating average ticket report for user id: {}", reportRequest.getUserId());
+
         return new ReportResponse(averageTicketReport.execute(reportRequest.toInput()));
     }
 
     @Override
-    @PostMapping("/report/monthly")
-    public ReportResponse monthlyReport(@RequestBody ReportRequest reportRequest) {
-        // Implement the logic to generate the monthly report based on the request
-        return new ReportResponse(monthlyReport.execute(reportRequest.toInput()));
+    @GetMapping("/report/monthly")
+    public ReportResponse monthlyReport() {
+
+        log.info("Generating monthly report for month: {}", LocalDateTime.now().getMonth().name());
+
+        return new ReportResponse(monthlyReport.execute());
     }
 
     @Override
-    @GetMapping("/report/best-buyers/{bestBuyersCount}")
-    public ReportResponse bestBuyersReport(@PathVariable Integer bestBuyersCount) {
-        // Implement the logic to generate the best buyers report based on the count
-        return new ReportResponse(bestBuyersReport.execute(bestBuyersCount));
+    @PostMapping("/report/best-buyers/{bestBuyersCount}")
+    public ReportResponse bestBuyersReport(@PathVariable Integer bestBuyersCount,
+                                           @RequestBody ReportRequest reportRequest) {
+
+        return new ReportResponse(bestBuyersReport.execute(bestBuyersCount, reportRequest.toInput()));
     }
 }
