@@ -4,17 +4,16 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Data
 @Builder
 public class ProductModel {
-    private UUID id;
+    private String id;
     private String name;
     private Double price;
     private String description;
     private String category;
-    private Integer stockQuantity;
+    private Integer quantity;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

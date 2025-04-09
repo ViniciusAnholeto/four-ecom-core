@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Slf4j
 @Component
@@ -45,16 +44,17 @@ public class ProductsDatabaseAdapter implements DatabasePort {
                 .category(input.getCategory().isEmpty()
                         ? existingProduct.getCategory()
                         : input.getCategory())
-                .stockQuantity(input.getQuantity() == null
-                        ? existingProduct.getStockQuantity()
+                .quantity(input.getQuantity() == null
+                        ? existingProduct.getQuantity()
                         : input.getQuantity())
+                .createdAt(existingProduct.getCreatedAt())
                 .build();
 
         return productRepository.save(new Product(productToUpdate)).toModel();
     }
 
     @Override
-    public Optional<ProductModel> findProductById(UUID id) {
+    public Optional<ProductModel> findProductById(String id) {
         log.info("Finding product by ID: {}", id);
 
         Optional<Product> product = productRepository.findById(id);
@@ -63,7 +63,7 @@ public class ProductsDatabaseAdapter implements DatabasePort {
     }
 
     @Override
-    public void deleteProduct(UUID id) {
+    public void deleteProduct(String id) {
         log.info("Deleting product by ID: {}", id);
 
         productRepository.deleteById(id);

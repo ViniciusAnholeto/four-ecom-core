@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -17,13 +16,13 @@ public class DeleteProductImpl implements DeleteProduct {
     private final DatabasePort databasePort;
 
     @Override
-    public void execute(UUID id) {
+    public void execute(String id) {
         Optional<ProductModel> product = databasePort.findProductById(id);
 
         if (product.isPresent()) {
             databasePort.deleteProduct(id);
         } else {
-            throw new ProductNotFoundException(id.toString());
+            throw new ProductNotFoundException(id);
         }
     }
 }

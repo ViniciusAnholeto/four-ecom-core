@@ -21,24 +21,25 @@ spring:
   config:
     import: optional:configtree:/mnt/secrets-store/
   datasource:
-    url: 'jdbc:mysql://localhost:3306/your_database_name'
-    username: username
+    url: 'jdbc:mysql://localhost:3306/testdb'
+    username: user
     password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    show-sql: true
     hibernate:
       ddl-auto: update
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-  kafka:
-    producer:
-      key-serializer: 'org.apache.kafka.common.serialization.StringSerializer'
-      value-serializer: 'org.springframework.kafka.support.serializer.JsonSerializer'
-    consumer:
-      key-deserializer: 'org.apache.kafka.common.serialization.StringDeserializer'
-      value-deserializer: 'org.springframework.kafka.support.serializer.JsonDeserializer'
-    listener:
-      ack-mode: manual
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+#  kafka:
+#    producer:
+#      key-serializer: 'org.apache.kafka.common.serialization.StringSerializer'
+#      value-serializer: 'org.springframework.kafka.support.serializer.JsonSerializer'
+#    consumer:
+#      key-deserializer: 'org.apache.kafka.common.serialization.StringDeserializer'
+#      value-deserializer: 'org.springframework.kafka.support.serializer.JsonDeserializer'
+#    listener:
+#      ack-mode: manual
 
 configs:
   kafka:

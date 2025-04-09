@@ -19,9 +19,9 @@ import java.util.UUID;
 @RequestMapping("/ecom/v1")
 public class ProductsController implements ProductsControllerDoc {
 
-    private CreateOrUpdateProduct createOrUpdateProduct;
-    private FindProduct findProduct;
-    private DeleteProduct deleteProduct;
+    private final CreateOrUpdateProduct createOrUpdateProduct;
+    private final FindProduct findProduct;
+    private final DeleteProduct deleteProduct;
 
     @Override
     @PostMapping("/product")
@@ -34,7 +34,7 @@ public class ProductsController implements ProductsControllerDoc {
 
     @Override
     @GetMapping("/product/{id}")
-    public ProductResponse getProduct(@PathVariable UUID id) {
+    public ProductResponse getProduct(@PathVariable String id) {
 
         log.info("Product ID received: {} - getProduct", id);
 
@@ -43,7 +43,7 @@ public class ProductsController implements ProductsControllerDoc {
 
     @Override
     @DeleteMapping("/product/{id}")
-    public void deleteProduct(@PathVariable UUID id) {
+    public void deleteProduct(@PathVariable String id) {
 
         log.info("Product ID received: {} - deleteProduct", id);
 

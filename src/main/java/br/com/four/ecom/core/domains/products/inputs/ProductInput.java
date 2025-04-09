@@ -4,12 +4,11 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Data
 @Builder
 public class ProductInput {
-    private Optional<UUID> id;
+    private Optional<String> id;
     private String name;
     private Double price;
     private String description;

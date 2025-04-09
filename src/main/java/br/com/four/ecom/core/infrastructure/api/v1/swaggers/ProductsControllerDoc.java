@@ -8,13 +8,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-import java.util.UUID;
-
 @Tag(name = "Produtos")
 public interface ProductsControllerDoc {
 
-    @Operation(summary = "Criar produto",
-            description = "Endpoint para criar um produto no sistema de ecommerce."
+    @Operation(summary = "Criar ou atualizar produto",
+            description = "Endpoint para criar ou atualizar um produto no sistema de ecommerce."
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -39,7 +37,7 @@ public interface ProductsControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    ProductResponse getProduct(UUID id);
+    ProductResponse getProduct(String id);
 
     @Operation(summary = "Deletar produto",
             description = "Endpoint para deletar um produto no sistema de ecommerce."
@@ -53,5 +51,5 @@ public interface ProductsControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    void deleteProduct(UUID id);
+    void deleteProduct(String id);
 }

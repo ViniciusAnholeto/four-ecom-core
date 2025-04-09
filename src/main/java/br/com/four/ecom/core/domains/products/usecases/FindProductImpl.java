@@ -7,8 +7,6 @@ import br.com.four.ecom.core.domains.products.resources.FindProduct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 @RequiredArgsConstructor
 public class FindProductImpl implements FindProduct {
@@ -16,8 +14,8 @@ public class FindProductImpl implements FindProduct {
     private final DatabasePort databasePort;
 
     @Override
-    public ProductModel execute(UUID id) {
+    public ProductModel execute(String id) {
         return databasePort.findProductById(id)
-                .orElseThrow(() -> new ProductNotFoundException(id.toString()));
+                .orElseThrow(() -> new ProductNotFoundException(id));
     }
 }
