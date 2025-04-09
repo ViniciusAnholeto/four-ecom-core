@@ -14,5 +14,5 @@ public class ProductInput {
     private Double price;
     private String description;
     private String category;
-    private Integer stockQuantity;
+    private Integer quantity;
 }

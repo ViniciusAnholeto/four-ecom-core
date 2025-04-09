@@ -1,8 +1,8 @@
 package br.com.four.ecom.core.domains.products.ports;
 
+import br.com.four.ecom.core.domains.products.inputs.ProductInput;
 import br.com.four.ecom.core.domains.products.models.NewProductModel;
 import br.com.four.ecom.core.domains.products.models.ProductModel;
-import br.com.four.ecom.core.domains.products.models.UpdateProductModel;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -12,7 +12,7 @@ public interface DatabasePort {
 
     ProductModel createProduct(NewProductModel product);
 
-    ProductModel updateProduct(UpdateProductModel product);
+    ProductModel updateProduct(ProductInput input, ProductModel existingProduct);
 
     void deleteProduct(UUID id);
 }

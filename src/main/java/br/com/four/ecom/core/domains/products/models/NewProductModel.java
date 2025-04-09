@@ -9,13 +9,13 @@ public class NewProductModel {
     private Double price;
     private String description;
     private String category;
-    private Integer stockQuantity;
+    private Integer quantity;
 
     public NewProductModel(ProductInput productInput) {
         this.name = productInput.getName();
         this.price = productInput.getPrice();
         this.description = productInput.getDescription();
         this.category = productInput.getCategory();
-        this.stockQuantity = productInput.getStockQuantity();
+        this.quantity = productInput.getQuantity();
     }
 }

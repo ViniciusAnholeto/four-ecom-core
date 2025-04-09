@@ -22,7 +22,7 @@ public class ProductRequest {
                 .price(price)
                 .description(description)
                 .category(category)
-                .stockQuantity(stockQuantity)
+                .quantity(stockQuantity)
                 .build();
     }
 }

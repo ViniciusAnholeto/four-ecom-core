@@ -2,6 +2,7 @@ package br.com.four.ecom.core.domains.orders.strategies.commands;
 
 import br.com.four.ecom.core.domains.orders.enums.OrderCommandEnum;
 import br.com.four.ecom.core.domains.orders.enums.OrderStatusEnum;
+import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.ProductsUpdateException;
 import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.OrderPaymentFailedException;
 import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.InvalidOrderStatusException;
 import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.OrderNotFoundException;
@@ -10,8 +11,7 @@ import br.com.four.ecom.core.domains.orders.models.OrderModel;
 import br.com.four.ecom.core.domains.orders.ports.DatabasePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -25,27 +25,30 @@ public class ProcessCommandPay implements HasCommand {
     }
 
     @Override
+    @Transactional
     public void execute(OrderInput orderInput) {
-        Optional<OrderModel> orderToPay = databasePort.getOrderById(orderInput.getOrderId());
+        OrderModel existingOrder = databasePort.getOrderById(orderInput.getOrderId())
+                .orElseThrow(() -> new OrderNotFoundException(orderInput.getOrderId()));
 
-        if (orderToPay.isPresent()) {
-            OrderModel existingOrder = orderToPay.get();
+        switch (existingOrder.getStatus()) {
+            case PAYMENT_PENDING:
+                existingOrder.setStatus(OrderStatusEnum.PAID);
+                break;
+            case OPEN, PAID, CANCELLED:
+                throw new OrderPaymentFailedException(existingOrder.getOrderId());
+            default:
+                throw new InvalidOrderStatusException(existingOrder.getStatus().name(),
+                        existingOrder.getOrderId());
+        }
 
-            switch (existingOrder.getStatus()) {
-                case PAYMENT_PENDING:
-                    existingOrder.setStatus(OrderStatusEnum.PAID);
-                    break;
-                case OPEN, PAID, CANCELLED:
-                    throw new OrderPaymentFailedException(existingOrder.getOrderId());
-                default:
-                    throw new InvalidOrderStatusException(existingOrder.getStatus().name(),
-                            existingOrder.getOrderId());
+        databasePort.updateOrder(existingOrder);
+
+        for (var item : existingOrder.getProducts()) {
+            try {
+                databasePort.updateProductQuantity(item.getProductId(), item.getQuantity());
+            } catch (Exception e) {
+                throw new ProductsUpdateException(existingOrder.getOrderId());
             }
-
-            databasePort.updateOrder(existingOrder);
-
-        } else {
-            throw new OrderNotFoundException(orderInput.getOrderId());
         }
     }
 }

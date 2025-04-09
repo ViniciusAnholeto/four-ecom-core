@@ -4,10 +4,9 @@ import br.com.four.ecom.core.domains.orders.models.OrderModel;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface DatabasePort {
-
-    void deleteOrder(Long id);
 
     Optional<OrderModel> getOrderById(Long id);
 
@@ -17,6 +16,6 @@ public interface DatabasePort {
 
     Optional<OrderModel> updateOrder(OrderModel orderModel);
 
-    void updateProductQuantity(Long productId, Integer quantity);
+    void updateProductQuantity(UUID productId, Integer quantity);
 
 }

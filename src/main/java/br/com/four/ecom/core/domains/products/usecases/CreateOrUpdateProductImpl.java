@@ -3,7 +3,6 @@ package br.com.four.ecom.core.domains.products.usecases;
 import br.com.four.ecom.core.domains.products.inputs.ProductInput;
 import br.com.four.ecom.core.domains.products.models.NewProductModel;
 import br.com.four.ecom.core.domains.products.models.ProductModel;
-import br.com.four.ecom.core.domains.products.models.UpdateProductModel;
 import br.com.four.ecom.core.domains.products.ports.DatabasePort;
 import br.com.four.ecom.core.domains.products.resources.CreateOrUpdateProduct;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +23,7 @@ public class CreateOrUpdateProductImpl implements CreateOrUpdateProduct {
                 : Optional.empty();
 
         return existingProduct.isPresent()
-                ? updateProduct(input)
+                ? updateProduct(input, existingProduct.get())
                 : createProduct(input);
     }
 
@@ -32,7 +31,7 @@ public class CreateOrUpdateProductImpl implements CreateOrUpdateProduct {
         return databasePort.createProduct(new NewProductModel(input));
     }
 
-    private ProductModel updateProduct(ProductInput input) {
-        return databasePort.updateProduct(new UpdateProductModel(input));
+    private ProductModel updateProduct(ProductInput input, ProductModel existingProduct) {
+        return databasePort.updateProduct(input, existingProduct);
     }
 }
