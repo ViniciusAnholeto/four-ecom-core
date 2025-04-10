@@ -63,12 +63,11 @@ public class OrdersController implements OrdersControllerDoc {
     }
 
     @Override
-    @PostMapping("/order/payment/{id}")
-    public OrderResponse paymentOrder(@PathVariable String id,
-                                      @RequestBody @Valid PaymentRequest paymentRequest) {
+    @PostMapping("/order/payment")
+    public OrderResponse paymentOrder(@RequestBody @Valid PaymentRequest paymentRequest) {
 
-        log.info("Processing payment for order with id: {}", id);
+        log.info("Processing payment for order with id: {}", paymentRequest.getOrderId());
 
-        return new OrderResponse(payOrder.execute(id, paymentRequest.toInput()));
+        return new OrderResponse(payOrder.execute(paymentRequest.toInput()));
     }
 }

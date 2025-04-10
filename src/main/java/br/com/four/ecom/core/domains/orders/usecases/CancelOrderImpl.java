@@ -21,7 +21,6 @@ public class CancelOrderImpl implements CancelOrder {
     }
 
     private void cancelOrder(String id) {
-        databasePort.updateOrderStatus(id, "CANCELLED");
-//        kafkaPort.sendCancelCommand(id);
+        kafkaPort.sendCancelCommand(id);
     }
 }

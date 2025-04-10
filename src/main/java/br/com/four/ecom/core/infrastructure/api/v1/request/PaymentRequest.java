@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class PaymentRequest {
     @NotNull(message = "Order ID não pode ser nulo")
-    private Long orderId;
+    private String orderId;
 
     @NotNull(message = "Método de pagamento não pode ser nulo")
     private String paymentMethod;

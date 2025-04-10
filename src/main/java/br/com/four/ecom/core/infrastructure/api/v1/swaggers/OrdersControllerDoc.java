@@ -82,5 +82,5 @@ public interface OrdersControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    OrderResponse paymentOrder(String orderId, PaymentRequest paymentRequest);
+    OrderResponse paymentOrder(PaymentRequest paymentRequest);
 }

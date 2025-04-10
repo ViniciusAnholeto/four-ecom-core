@@ -62,4 +62,11 @@ public class Exceptions {
         }
     }
 
+    public static class InvalidCommandException extends SynchronousException {
+
+        public InvalidCommandException(String command, String orderId) {
+            super("ECOM-DO-009", String.format("Invalid command: %s for order id: %s", command, orderId));
+        }
+    }
+
 }

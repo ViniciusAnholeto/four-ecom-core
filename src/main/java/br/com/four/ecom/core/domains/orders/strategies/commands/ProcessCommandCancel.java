@@ -2,10 +2,10 @@ package br.com.four.ecom.core.domains.orders.strategies.commands;
 
 import br.com.four.ecom.core.domains.orders.enums.OrderCommandEnum;
 import br.com.four.ecom.core.domains.orders.enums.OrderStatusEnum;
-import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.OrderNotFoundException;
 import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.InvalidOrderStatusException;
 import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.OrderCancelFailedException;
-import br.com.four.ecom.core.domains.orders.inputs.OrderInput;
+import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.OrderNotFoundException;
+import br.com.four.ecom.core.domains.orders.inputs.CommandInput;
 import br.com.four.ecom.core.domains.orders.models.OrderModel;
 import br.com.four.ecom.core.domains.orders.ports.DatabasePort;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +25,8 @@ public class ProcessCommandCancel implements HasCommand {
     }
 
     @Override
-    public void execute(OrderInput orderInput) {
-        Optional<OrderModel> orderToCancel = databasePort.getOrderById(orderInput.getOrderId());
+    public void execute(CommandInput commandInput) {
+        Optional<OrderModel> orderToCancel = databasePort.getOrderById(commandInput.getOrderId());
 
         if (orderToCancel.isPresent()) {
             OrderModel existingOrder = orderToCancel.get();
@@ -47,7 +47,7 @@ public class ProcessCommandCancel implements HasCommand {
                     OrderStatusEnum.CANCELLED.name());
 
         } else {
-            throw new OrderNotFoundException(orderInput.getOrderId());
+            throw new OrderNotFoundException(commandInput.getOrderId());
         }
     }
 }
