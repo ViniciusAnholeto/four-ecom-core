@@ -5,13 +5,11 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
-import java.util.UUID;
-
 @Data
 public class OrderProductModel {
 
     @NotNull(message = "ID do produto não pode ser nulo")
-    private UUID id;
+    private String id;
 
     @Positive(message = "Quantidade de produtos precisa ser um valor positivo")
     private Integer quantity;

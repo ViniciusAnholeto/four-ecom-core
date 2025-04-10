@@ -41,11 +41,12 @@ public class ProcessCommandPay implements HasCommand {
                         existingOrder.getOrderId());
         }
 
-        databasePort.updateOrder(existingOrder);
+        databasePort.updateOrderStatus(existingOrder.getOrderId(),
+                OrderStatusEnum.PAID.name());
 
         for (var item : existingOrder.getProducts()) {
             try {
-                databasePort.updateProductQuantity(item.getProductId(), item.getQuantity());
+                databasePort.updateProductDatabase(item.getProductId(), item.getQuantity());
             } catch (Exception e) {
                 throw new ProductsUpdateException(existingOrder.getOrderId());
             }

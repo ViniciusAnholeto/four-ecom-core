@@ -5,7 +5,7 @@ import br.com.four.ecom.core.domains.orders.models.OrderModel;
 import java.util.List;
 
 public interface FindOrder {
-    OrderModel executeById(Long id);
+    OrderModel executeById(String id);
 
-    List<OrderModel> executeByUserId(Long userId);
+    List<OrderModel> executeByCustomerId(String customerId);
 }

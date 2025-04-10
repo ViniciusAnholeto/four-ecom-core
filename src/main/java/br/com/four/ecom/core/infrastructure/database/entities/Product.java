@@ -1,5 +1,6 @@
 package br.com.four.ecom.core.infrastructure.database.entities;
 
+import br.com.four.ecom.core.domains.orders.models.OrderProductModel;
 import br.com.four.ecom.core.domains.products.models.NewProductModel;
 import br.com.four.ecom.core.domains.products.models.ProductModel;
 import jakarta.persistence.Column;
@@ -44,7 +45,7 @@ public class Product {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public ProductModel toModel() {
+    public ProductModel toProductsModel() {
         return ProductModel.builder()
                 .id(this.id)
                 .name(this.name)

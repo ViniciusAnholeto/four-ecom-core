@@ -8,15 +8,15 @@ public class Exceptions {
 
     public static class OrderNotFoundException extends SynchronousException {
 
-        public OrderNotFoundException(Long orderId) {
-            super("ECOM-DO-001", String.format("Order id: %d not found.", orderId));
+        public OrderNotFoundException(String orderId) {
+            super("ECOM-DO-001", String.format("Order id: %s not found.", orderId));
         }
     }
 
-    public static class OrderNotFoundForUserIdException extends SynchronousException {
+    public static class OrderNotFoundForCustomerIdException extends SynchronousException {
 
-        public OrderNotFoundForUserIdException(Long userId) {
-            super("ECOM-DO-002", String.format("Order not found for user id: %d.", userId));
+        public OrderNotFoundForCustomerIdException(String customerId) {
+            super("ECOM-DO-002", String.format("Order not found for customer id: %s.", customerId));
         }
     }
 
@@ -29,29 +29,36 @@ public class Exceptions {
 
     public static class InvalidOrderStatusException extends SynchronousException {
 
-        public InvalidOrderStatusException(String orderStatus, Long orderId) {
-            super("ECOM-DO-004", String.format("Cannot update order id: %d with status: %s.", orderId, orderStatus));
+        public InvalidOrderStatusException(String orderStatus, String orderId) {
+            super("ECOM-DO-004", String.format("Cannot update order id: %s with status: %s.", orderId, orderStatus));
         }
     }
 
     public static class OrderCancelFailedException extends SynchronousException {
 
-        public OrderCancelFailedException(Long orderId, String orderStatus) {
-            super("ECOM-DO-005", String.format("Cannot cancel order id: %d with status: %s.", orderId, orderStatus));
+        public OrderCancelFailedException(String orderId, String orderStatus) {
+            super("ECOM-DO-005", String.format("Cannot cancel order id: %s with status: %s.", orderId, orderStatus));
         }
     }
 
     public static class OrderPaymentFailedException extends SynchronousException {
 
-        public OrderPaymentFailedException(Long orderId) {
-            super("ECOM-DO-006", String.format("Order status update failed for order id: %d.", orderId));
+        public OrderPaymentFailedException(String orderId) {
+            super("ECOM-DO-006", String.format("Order status update failed for order id: %s.", orderId));
         }
     }
 
     public static class ProductsUpdateException extends SynchronousException {
 
-        public ProductsUpdateException(Long orderId) {
-            super("ECOM-DO-007", String.format("Products quantity update for order id: %d.", orderId));
+        public ProductsUpdateException(String orderId) {
+            super("ECOM-DO-007", String.format("Products quantity update for order id: %s.", orderId));
+        }
+    }
+
+    public static class ProductNotFoundException extends SynchronousException {
+
+        public ProductNotFoundException(String productId) {
+            super("ECOM-DO-008", String.format("Product UUID: %s not found.", productId));
         }
     }
 

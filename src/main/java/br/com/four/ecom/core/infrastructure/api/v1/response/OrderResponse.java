@@ -9,21 +9,21 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class OrderResponse {
-    private Long orderId;
-    private Long userId;
+    private String orderId;
+    private String customerId;
     private Double totalPrice;
     private String status;
     private List<OrderProductsModel> products;
 
     public OrderResponse(OrderModel orderModel) {
         this.orderId = orderModel.getOrderId();
-        this.userId = orderModel.getUserId();
+        this.customerId = orderModel.getCustomerId();
         this.totalPrice = orderModel.getTotalPrice();
         this.status = orderModel.getStatus().name();
         this.products = orderModel.getProducts().stream()
                 .map(product -> OrderProductsModel.builder()
                         .productId(product.getProductId())
-                        .productName(product.getProductName())
+                        .price(product.getPrice())
                         .quantity(product.getQuantity())
                         .build())
                 .toList();

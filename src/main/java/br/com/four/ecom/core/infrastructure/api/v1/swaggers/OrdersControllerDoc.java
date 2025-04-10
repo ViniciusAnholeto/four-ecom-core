@@ -14,8 +14,8 @@ import java.util.List;
 @Tag(name = "Pedidos")
 public interface OrdersControllerDoc {
 
-    @Operation(summary = "Criar pedido",
-            description = "Endpoint para criar um pedido no sistema de ecommerce."
+    @Operation(summary = "Criar ou atualizar pedido",
+            description = "Endpoint para criar ou atualizar um pedido no sistema de ecommerce."
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -40,10 +40,10 @@ public interface OrdersControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    OrderResponse getOrder(Long id);
+    OrderResponse getOrder(String id);
 
-    @Operation(summary = "Deletar pedido",
-            description = "Endpoint para deletar um pedido no sistema de ecommerce."
+    @Operation(summary = "Cancelar pedido",
+            description = "Endpoint para cancelar um pedido no sistema de ecommerce."
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -54,10 +54,10 @@ public interface OrdersControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    void cancelOrder(Long id);
+    void cancelOrder(String id);
 
-    @Operation(summary = "Buscar pedido por usuario",
-            description = "Endpoint para buscar um pedido por usuario no sistema de ecommerce."
+    @Operation(summary = "Buscar pedido por cliente",
+            description = "Endpoint para buscar um pedido por cliente no sistema de ecommerce."
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -68,7 +68,7 @@ public interface OrdersControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    List<OrderResponse> getOrderByUserId(Long userId);
+    List<OrderResponse> getOrderByCustomerId(String customerId);
 
     @Operation(summary = "Pagar pedido",
             description = "Endpoint para pagar um pedido no sistema de ecommerce."
@@ -82,5 +82,5 @@ public interface OrdersControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    OrderResponse paymentOrder(Long orderId, PaymentRequest paymentRequest);
+    OrderResponse paymentOrder(String orderId, PaymentRequest paymentRequest);
 }

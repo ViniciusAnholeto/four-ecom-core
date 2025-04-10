@@ -43,7 +43,8 @@ public class ProcessCommandCancel implements HasCommand {
                             existingOrder.getOrderId());
             }
 
-            databasePort.updateOrder(existingOrder);
+            databasePort.updateOrderStatus(existingOrder.getOrderId(),
+                    OrderStatusEnum.CANCELLED.name());
 
         } else {
             throw new OrderNotFoundException(orderInput.getOrderId());

@@ -21,10 +21,10 @@ import java.util.List;
 @RequestMapping("/ecom/v1")
 public class OrdersController implements OrdersControllerDoc {
 
-    private CreateOrUpdateOrder createOrUpdateOrder;
-    private FindOrder findOrder;
-    private CancelOrder cancelOrder;
-    private PayOrder payOrder;
+    private final CreateOrUpdateOrder createOrUpdateOrder;
+    private final FindOrder findOrder;
+    private final CancelOrder cancelOrder;
+    private final PayOrder payOrder;
 
     @Override
     @PostMapping("/order")
@@ -37,7 +37,7 @@ public class OrdersController implements OrdersControllerDoc {
 
     @Override
     @GetMapping("/order/{id}")
-    public OrderResponse getOrder(@PathVariable Long id) {
+    public OrderResponse getOrder(@PathVariable String id) {
 
         log.info("Finding order with id: {}", id);
 
@@ -45,17 +45,17 @@ public class OrdersController implements OrdersControllerDoc {
     }
 
     @Override
-    @GetMapping("/order/user/{user}")
-    public List<OrderResponse> getOrderByUserId(@PathVariable Long user) {
+    @GetMapping("/order/customer/{customerId}")
+    public List<OrderResponse> getOrderByCustomerId(@PathVariable String customerId) {
 
-        log.info("Finding order for user with id: {}", user);
+        log.info("Finding order for customer with id: {}", customerId);
 
-        return new OrderResponse().from(findOrder.executeByUserId(user));
+        return new OrderResponse().from(findOrder.executeByCustomerId(customerId));
     }
 
     @Override
     @DeleteMapping("/order/{id}")
-    public void cancelOrder(@PathVariable Long id) {
+    public void cancelOrder(@PathVariable String id) {
 
         log.info("Canceling order with id: {}", id);
 
@@ -64,7 +64,7 @@ public class OrdersController implements OrdersControllerDoc {
 
     @Override
     @PostMapping("/order/payment/{id}")
-    public OrderResponse paymentOrder(@PathVariable Long id,
+    public OrderResponse paymentOrder(@PathVariable String id,
                                       @RequestBody @Valid PaymentRequest paymentRequest) {
 
         log.info("Processing payment for order with id: {}", id);

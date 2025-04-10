@@ -1,19 +1,17 @@
 package br.com.four.ecom.core.infrastructure.api.v1.request;
 
+import br.com.four.ecom.core.domains.orders.enums.OrderOperationEnum;
 import br.com.four.ecom.core.domains.orders.inputs.OrderInput;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-
-import javax.annotation.RegEx;
 
 @Data
 public class OrderRequest {
-    private Long orderId;
+    private String orderId;
 
     @NotNull(message = "User ID não pode ser nulo")
-    private Long userId;
+    private String customerId;
 
     @Valid
     @NotNull(message = "Insira ao menos um produto")
@@ -21,14 +19,14 @@ public class OrderRequest {
 
     @Valid
     @NotNull(message = "Insira a operação desejada. ADD ou REMOVE produtos")
-    private OrderOperationEnum operation;
+    private OrderOperationRequestEnum operation;
 
     public OrderInput toInput() {
         return OrderInput.builder()
                 .orderId(orderId)
-                .userId(userId)
+                .customerId(customerId)
                 .product(product.toInput())
-                .operation(operation.getOperation())
+                .operation(OrderOperationEnum.valueOf(operation.getOperation()))
                 .build();
     }
 }

@@ -1,7 +1,7 @@
 package br.com.four.ecom.core.domains.orders.usecases;
 
 import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.OrderNotFoundException;
-import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.OrderNotFoundForUserIdException;
+import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.OrderNotFoundForCustomerIdException;
 import br.com.four.ecom.core.domains.orders.models.OrderModel;
 import br.com.four.ecom.core.domains.orders.ports.DatabasePort;
 import br.com.four.ecom.core.domains.orders.resources.FindOrder;
@@ -18,7 +18,7 @@ public class FindOrderImpl implements FindOrder {
     private final DatabasePort databasePort;
 
     @Override
-    public OrderModel executeById(Long id) {
+    public OrderModel executeById(String id) {
         Optional<OrderModel> order = databasePort.getOrderById(id);
 
         if (order.isPresent()) {
@@ -29,13 +29,13 @@ public class FindOrderImpl implements FindOrder {
     }
 
     @Override
-    public List<OrderModel> executeByUserId(Long userId) {
-        Optional<List<OrderModel>> order = databasePort.getOrderByUserId(userId);
+    public List<OrderModel> executeByCustomerId(String customerId) {
+        Optional<List<OrderModel>> order = databasePort.getOrderByCustomerId(customerId);
 
         if (order.isPresent() && !order.get().isEmpty()) {
             return order.get();
         } else {
-            throw new OrderNotFoundForUserIdException(userId);
+            throw new OrderNotFoundForCustomerIdException(customerId);
         }
     }
 }

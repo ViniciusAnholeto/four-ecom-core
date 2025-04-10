@@ -25,18 +25,7 @@ public class OrderStatusOpen implements HasStatus {
 
     @Override
     public OrderModel execute(OrderModel existingOrder, OrderInput orderInput) {
-        List<OrderProductsModel> updatedProducts = new ArrayList<>();
-        for (OrderProductsModel product : existingOrder.getProducts()) {
-            if (product.getProductId().equals(orderInput.getProduct().getProductId())) {
-                product.setQuantity(orderInput.getProduct().getQuantity());
-            }
-            updatedProducts.add(product);
-        }
-
-        existingOrder.setProducts(updatedProducts);
-        existingOrder.setStatus(OrderStatusEnum.OPEN);
-
-        Optional<OrderModel> updatedOrder = databasePort.updateOrder(existingOrder);
+        Optional<OrderModel> updatedOrder = databasePort.updateOrder(existingOrder, orderInput);
 
         return updatedOrder.orElseThrow(() -> new RuntimeException("Failed to update order"));
     }

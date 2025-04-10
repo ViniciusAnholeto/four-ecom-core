@@ -3,6 +3,8 @@ package br.com.four.ecom.core.domains.orders.usecases;
 import br.com.four.ecom.core.domains.orders.enums.OrderStatusEnum;
 import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.OrderCreationFailedException;
 import br.com.four.ecom.core.domains.orders.inputs.OrderInput;
+import br.com.four.ecom.core.domains.orders.models.CreateOrderModel;
+import br.com.four.ecom.core.domains.orders.models.CreatedOrderModel;
 import br.com.four.ecom.core.domains.orders.models.OrderModel;
 import br.com.four.ecom.core.domains.orders.models.OrderProductsModel;
 import br.com.four.ecom.core.domains.orders.ports.DatabasePort;
@@ -39,20 +41,26 @@ public class CreateOrUpdateOrderImpl implements CreateOrUpdateOrder {
     }
 
     private OrderModel createOrder(OrderInput orderInput) {
-        List<OrderProductsModel> productToCreate = new ArrayList<>();
-        productToCreate.add(OrderProductsModel.builder()
-                .productId(orderInput.getProduct().getProductId())
-                .quantity(orderInput.getProduct().getQuantity())
-                .build());
+        CreatedOrderModel orderCreated = databasePort.createOrder(new CreateOrderModel(orderInput));
 
-        Optional<OrderModel> createdOrder = databasePort.createOrder(
-                OrderModel.builder()
-                        .userId(orderInput.getUserId())
-                        .products(productToCreate)
-                        .status(OrderStatusEnum.OPEN)
-                        .build()
-        );
+        if (orderCreated == null) {
+            throw new OrderCreationFailedException();
+        }
 
-        return createdOrder.orElseThrow(OrderCreationFailedException::new);
+        List<OrderProductsModel> products = new ArrayList<>();
+        OrderProductsModel orderProduct = new OrderProductsModel();
+        orderProduct.setProductId(orderCreated.getProductId());
+        orderProduct.setQuantity(orderCreated.getQuantity());
+        products.add(orderProduct);
+
+        return OrderModel.builder()
+                .orderId(orderCreated.getOrderId())
+                .customerId(orderCreated.getCustomerId())
+                .totalPrice(orderCreated.getPrice())
+                .status(OrderStatusEnum.valueOf(orderCreated.getStatus()))
+                .products(products)
+                .createdAt(orderCreated.getCreatedAt())
+                .updatedAt(orderCreated.getUpdatedAt())
+                .build();
     }
 }

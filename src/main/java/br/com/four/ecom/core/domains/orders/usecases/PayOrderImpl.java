@@ -22,7 +22,7 @@ public class PayOrderImpl implements PayOrder {
     private final DatabasePort databasePort;
 
     @Override
-    public OrderModel execute(Long id, PaymentInput paymentInput) {
+    public OrderModel execute(String id, PaymentInput paymentInput) {
         Optional<OrderModel> order = databasePort.getOrderById(id);
 
         if (order.isPresent()) {
@@ -34,7 +34,9 @@ public class PayOrderImpl implements PayOrder {
                 throw new InvalidOrderStatusException(existingOrder.getStatus().name(), id);
             }
 
-            Optional<OrderModel> updatedOrder = databasePort.updateOrder(existingOrder);
+            Optional<OrderModel> updatedOrder = databasePort.updateOrderStatus(
+                    existingOrder.getOrderId(),
+                    OrderStatusEnum.PAYMENT_PENDING.name());
 
             kafkaPort.sendPaymentCommand(existingOrder.getOrderId());
 

@@ -23,7 +23,7 @@ public class ProductsDatabaseAdapter implements DatabasePort {
     public ProductModel createProduct(NewProductModel newProduct) {
         log.info("Creating new product: {}", newProduct);
 
-        return productRepository.save(new Product(newProduct)).toModel();
+        return productRepository.save(new Product(newProduct)).toProductsModel();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ProductsDatabaseAdapter implements DatabasePort {
                 .createdAt(existingProduct.getCreatedAt())
                 .build();
 
-        return productRepository.save(new Product(productToUpdate)).toModel();
+        return productRepository.save(new Product(productToUpdate)).toProductsModel();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class ProductsDatabaseAdapter implements DatabasePort {
 
         Optional<Product> product = productRepository.findById(id);
 
-        return product.map(Product::toModel);
+        return product.map(Product::toProductsModel);
     }
 
     @Override
