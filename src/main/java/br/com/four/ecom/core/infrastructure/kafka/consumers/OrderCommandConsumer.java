@@ -1,6 +1,6 @@
 package br.com.four.ecom.core.infrastructure.kafka.consumers;
 
-import br.com.four.ecom.core.domains.commons.EcomException.AsynchronousException;
+import br.com.four.ecom.core.utils.EcomException.AsynchronousException;
 import br.com.four.ecom.core.domains.orders.resources.CommandProcessor;
 import br.com.four.ecom.core.infrastructure.kafka.dto.OrderCommandPayload;
 import lombok.RequiredArgsConstructor;

@@ -64,10 +64,6 @@ logging:
   pattern:
     level: '%5p [${info.app.name:},%X{traceId:-},%X{spanId:-}]'
 
-#auth:
-#  jwt-expiration-ms: '300000'
-#  jwt-secret: ${key-chat-platfu-auth-jwt-secret}
-
 auth:
   jwt-expiration-ms: '120000'
   jwt-secret: '69df$5314%Cf5e2#4fA9b@b33d*a95e6Sb1da;e0f9c30fF3TEYbf&5aGea!4311^86fa>S49ceJc2I4Pa72SD56'

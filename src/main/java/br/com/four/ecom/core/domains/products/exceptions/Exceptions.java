@@ -1,6 +1,6 @@
 package br.com.four.ecom.core.domains.products.exceptions;
 
-import br.com.four.ecom.core.domains.commons.EcomException.SynchronousException;
+import br.com.four.ecom.core.utils.EcomException.SynchronousException;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

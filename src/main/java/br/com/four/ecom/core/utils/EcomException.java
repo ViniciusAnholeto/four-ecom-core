@@ -1,4 +1,4 @@
-package br.com.four.ecom.core.domains.commons;
+package br.com.four.ecom.core.utils;
 
 import lombok.Getter;
 
