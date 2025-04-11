@@ -168,8 +168,12 @@ public class ProductsDatabaseAdapter implements DatabasePort {
         productDocument.setCategory(product.getCategory());
         productDocument.setPrice(product.getPrice());
         productDocument.setQuantity(product.getQuantity());
-        productDocument.setCreatedAt(product.getCreatedAt().toInstant(ZoneOffset.UTC).toEpochMilli());
-        productDocument.setUpdatedAt(product.getUpdatedAt().toInstant(ZoneOffset.UTC).toEpochMilli());
+        productDocument.setCreatedAt(product.getCreatedAt() == null
+                ? LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli()
+                : product.getCreatedAt().toInstant(ZoneOffset.UTC).toEpochMilli());
+        productDocument.setUpdatedAt(product.getUpdatedAt() == null
+                ? LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli()
+                : product.getUpdatedAt().toInstant(ZoneOffset.UTC).toEpochMilli());
 
         return productDocument;
     }

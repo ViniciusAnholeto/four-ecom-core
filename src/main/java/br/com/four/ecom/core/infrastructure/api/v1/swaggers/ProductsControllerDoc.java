@@ -26,7 +26,7 @@ public interface ProductsControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    ProductResponse createOrUpdateProduct(ProductRequest product);
+    ProductResponse createOrUpdateProduct(String authorizationHeader, ProductRequest product);
 
     @Operation(summary = "Buscar produto",
             description = "Endpoint para buscar um produto no sistema de ecommerce."
@@ -54,5 +54,5 @@ public interface ProductsControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    void deleteProduct(String id);
+    void deleteProduct(String authorizationHeader, String id);
 }

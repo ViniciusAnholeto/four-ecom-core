@@ -13,29 +13,29 @@ import org.springframework.http.HttpHeaders;
 @Configuration
 class SwaggerConfig {
 
-  @Bean
-  public OpenAPI openApiConfiguration(
-      @Value("${info.app.name}") final String title,
-      @Value("${info.app.version}") final String version,
-      @Value("${info.app.description}") final String description
-  ) {
-    return new OpenAPI()
-        .addSecurityItem(new SecurityRequirement().addList(HttpHeaders.AUTHORIZATION))
-        .components(
-            new Components()
-                .addSecuritySchemes(HttpHeaders.AUTHORIZATION, authorization())
-        )
-        .info(new Info()
-            .title(title)
-            .version(version)
-            .description(description)
-        );
-  }
+    @Bean
+    public OpenAPI openApiConfiguration(
+            @Value("${info.app.name}") final String title,
+            @Value("${info.app.version}") final String version,
+            @Value("${info.app.description}") final String description
+    ) {
+        return new OpenAPI()
+                .addSecurityItem(new SecurityRequirement().addList(HttpHeaders.AUTHORIZATION))
+                .components(
+                        new Components()
+                                .addSecuritySchemes(HttpHeaders.AUTHORIZATION, authorization())
+                )
+                .info(new Info()
+                        .title(title)
+                        .version(version)
+                        .description(description)
+                );
+    }
 
-  public SecurityScheme authorization() {
-    return new SecurityScheme()
-        .name(HttpHeaders.AUTHORIZATION)
-        .type(SecurityScheme.Type.APIKEY)
-        .in(SecurityScheme.In.HEADER);
-  }
+    public SecurityScheme authorization() {
+        return new SecurityScheme()
+                .name(HttpHeaders.AUTHORIZATION)
+                .type(SecurityScheme.Type.APIKEY)
+                .in(SecurityScheme.In.HEADER);
+    }
 }

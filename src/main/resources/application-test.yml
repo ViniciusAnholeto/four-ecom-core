@@ -18,14 +18,19 @@ spring:
   ci:
     ambiente: "TESTE"
     secrets: "test"
-  config:
-    import: optional:configtree:/mnt/secrets-store/
   data:
     elasticsearch:
       repositories:
         enabled: true
+  elasticsearch:
+    rest:
+      uris: 'http://localhost:9200'
+      connection-timeout: 5000
+      read-timeout: 60000
+    indices:
+      auto-create: true
   datasource:
-    url: 'jdbc:mysql://localhost:3306/testdb'
+    url: 'jdbc:mysql://localhost:3306/four_ecom'
     username: user
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -45,13 +50,6 @@ spring:
       value-deserializer: 'org.springframework.kafka.support.serializer.JsonDeserializer'
     listener:
       ack-mode: manual
-  elasticsearch:
-    rest:
-      uris: 'http://localhost:9200'
-      connection-timeout: 5000
-      read-timeout: 60000
-    indices:
-      auto-create: true
 
 configs:
   kafka:

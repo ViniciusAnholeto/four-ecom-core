@@ -1,6 +1,7 @@
 package br.com.four.ecom.core.infrastructure.auth;
 
 import br.com.four.ecom.core.domains.auth.enums.RoleNameEnum;
+import br.com.four.ecom.core.domains.auth.exceptions.Exceptions.UnauthorizedUserException;
 import br.com.four.ecom.core.domains.auth.models.UserDataModel;
 import br.com.four.ecom.core.infrastructure.auth.models.TokenDataModel;
 import com.auth0.jwt.JWT;
@@ -45,5 +46,12 @@ public class AuthService {
     public Map<String, Object> parseAuthorization(String authorization) {
         final DecodedJWT jwt = JWT.decode(authorization.replaceFirst("Bearer ", ""));
         return jwt.getClaim("frwk").asMap();
+    }
+
+    public void validateRole(String token, String requiredRole, String action) {
+        TokenDataModel parsedToken = parseToken(token);
+        if (!requiredRole.equals(parsedToken.getRoleName().name())) {
+            throw new UnauthorizedUserException(parsedToken.getUserId(), action);
+        }
     }
 }

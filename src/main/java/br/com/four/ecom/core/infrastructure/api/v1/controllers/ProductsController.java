@@ -7,13 +7,13 @@ import br.com.four.ecom.core.infrastructure.api.v1.request.ProductRequest;
 import br.com.four.ecom.core.infrastructure.api.v1.request.ProductSearchRequest;
 import br.com.four.ecom.core.infrastructure.api.v1.response.ProductResponse;
 import br.com.four.ecom.core.infrastructure.api.v1.swaggers.ProductsControllerDoc;
+import br.com.four.ecom.core.infrastructure.auth.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -24,10 +24,15 @@ public class ProductsController implements ProductsControllerDoc {
     private final CreateOrUpdateProduct createOrUpdateProduct;
     private final FindProduct findProduct;
     private final DeleteProduct deleteProduct;
+    private final AuthService authorizationService;
 
     @Override
     @PostMapping("/product")
-    public ProductResponse createOrUpdateProduct(@RequestBody @Valid ProductRequest product) {
+    public ProductResponse createOrUpdateProduct(@RequestHeader("Authorization") String authorizationHeader,
+                                                 @RequestBody @Valid ProductRequest product) {
+
+        String token = authorizationHeader.replace("Bearer ", "");
+        authorizationService.validateRole(token, "ADMIN", "createOrUpdateProduct");
 
         log.info("Product received: {}", product);
 
@@ -45,7 +50,10 @@ public class ProductsController implements ProductsControllerDoc {
 
     @Override
     @DeleteMapping("/product/{id}")
-    public void deleteProduct(@PathVariable String id) {
+    public void deleteProduct(@RequestHeader("Authorization") String authorizationHeader, @PathVariable String id) {
+
+        String token = authorizationHeader.replace("Bearer ", "");
+        authorizationService.validateRole(token, "ADMIN", "deleteProduct");
 
         log.info("Product ID received: {} - deleteProduct", id);
 

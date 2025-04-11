@@ -18,7 +18,13 @@ public class FindProductImpl implements FindProduct {
 
     @Override
     public List<ProductModel> execute(ProductSearchInput input) {
-        return databasePort.findProductByFilters(input)
+        List<ProductModel> products = databasePort.findProductByFilters(input)
                 .orElseThrow(() -> new ProductNotFoundException(input));
+
+        if (products.isEmpty()) {
+            throw new ProductNotFoundException(input);
+        }
+
+        return products;
     }
 }

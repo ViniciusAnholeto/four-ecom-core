@@ -1,6 +1,6 @@
 # four-ecom-core
 
-Para avaliarmos suas habilidades, criamos um desafio técnico que simula um cenário real. O desafio testa seu conhecimento em Spring Boot, MySQL, Elasticsearch, Kafka e arquitetura limpa.
+Desafio técnico que simula um cenário real. O desafio utiliza conhecimentos em Spring Boot, MySQL, Elasticsearch, Kafka e arquitetura limpa.
 
 🎯 Objetivo
 
@@ -13,7 +13,6 @@ Construir um sistema de gerenciamento de pedidos e produtos para um e-commerce, 
     Gerenciamento de pedidos com regras de negócio.
 
 
-📌 Orientações
 🔑 Autenticação
 
     Implementar JWT para autenticação.
@@ -98,23 +97,36 @@ Construir um sistema de gerenciamento de pedidos e produtos para um e-commerce, 
     Ao criar ou atualizar um produto, esta operação deverá ser replicada no elasticSearch.
 
 
-🎓 Avaliação
-
-Avaliaremos suas decisões arquiteturais, a qualidade do código, a correta implementação das camadas de segurança, o tratamento das regras de negócio, e demais aspectos relevantes.
-
-Também será considerado:
-
-    O cuidado com a consistência dos dados entre MySQL e Elasticsearch.
-
-    A tomada de decisão sobre quando aplicar transações, garantindo a integridade das operações.
-
-    A adoção de boas práticas de desenvolvimento, com atenção à organização da arquitetura, separação de responsabilidades, segurança do código.
-
-
 🧑‍💻 Tecnologias
 
-    Java 17+
+    Java 21
     Springboot (Security, Data, Web, etc.)
     Mysql
     ElasticSearch
     Kafka
+    Docker
+
+
+ Serviços utilizados em Docker
+ 
+    MySQL
+    - Host: localhost
+    - Porta: 3306
+    - Usuário: user
+    - Senha: password
+    - Banco: four_ecom
+
+    ElasticSearch
+    - Host: localhost
+    - Porta: 9200
+    - Usuário: elastic
+    - Senha: password
+    - Versão: 8.17.1
+
+    Kafka
+    - Host: localhost
+    - Porta: 9094
+    
+    Zookeeper
+    - Host: localhost
+    - Porta: 2181
