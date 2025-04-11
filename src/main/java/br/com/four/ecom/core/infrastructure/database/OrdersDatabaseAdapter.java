@@ -44,7 +44,7 @@ public class OrdersDatabaseAdapter implements DatabasePort {
             log.error("Product not found with ID: {}", orderModel.getProductId());
             throw new ProductNotFoundException(orderModel.getProductId());
         } else if (product.get().getQuantity() < orderModel.getQuantity()) {
-            log.error("Insufficient product quantity for ID: {}", orderModel.getProductId());
+            log.error("Insufficient product quantity for ID: {} on create order", orderModel.getProductId());
             throw new Exceptions.InsuficientProductQuantityException(orderModel.getProductId(),
                     product.get().getQuantity());
         }
@@ -184,7 +184,7 @@ public class OrdersDatabaseAdapter implements DatabasePort {
             log.error("Product not found to ADD with ID: {}", productIdToUpdate);
             throw new ProductNotFoundException(productIdToUpdate);
         } else if (productOptional.get().getQuantity() < orderInput.getProduct().getQuantity()) {
-            log.error("Insufficient product quantity for ID: {}", orderInput.getProduct().getProductId());
+            log.error("Insufficient product quantity for ID: {} to add products", orderInput.getProduct().getProductId());
             throw new Exceptions.InsuficientProductQuantityException(orderInput.getProduct().getProductId(),
                     productOptional.get().getQuantity());
         }
@@ -203,18 +203,23 @@ public class OrdersDatabaseAdapter implements DatabasePort {
             existingOrder.setProducts(new ArrayList<>());
             existingOrder.getProducts().add(productToUpdate);
         } else {
-            Order newOrderEntry = new Order();
-            newOrderEntry.setOrderId(existingOrder.getOrderId());
-            newOrderEntry.setProductId(product.getId());
-            newOrderEntry.setPrice(product.getPrice());
-            newOrderEntry.setQuantity(orderInput.getProduct().getQuantity());
-            newOrderEntry.setCustomerId(existingOrder.getCustomerId());
-            newOrderEntry.setStatus(existingOrder.getStatus().name());
-            newOrderEntry.setCreatedAt(existingOrder.getCreatedAt());
-            newOrderEntry.setUpdatedAt(existingOrder.getUpdatedAt());
+            Order newOrderEntry = buildNewOrderEntry(existingOrder, orderInput, product);
 
             ordersRepository.save(newOrderEntry);
         }
+    }
+
+    private static Order buildNewOrderEntry(OrderModel existingOrder, OrderInput orderInput, Product product) {
+        Order newOrderEntry = new Order();
+        newOrderEntry.setOrderId(existingOrder.getOrderId());
+        newOrderEntry.setProductId(product.getId());
+        newOrderEntry.setPrice(product.getPrice());
+        newOrderEntry.setQuantity(orderInput.getProduct().getQuantity());
+        newOrderEntry.setCustomerId(existingOrder.getCustomerId());
+        newOrderEntry.setStatus(existingOrder.getStatus().name());
+        newOrderEntry.setCreatedAt(existingOrder.getCreatedAt());
+        newOrderEntry.setUpdatedAt(existingOrder.getUpdatedAt());
+        return newOrderEntry;
     }
 
     private void handleRemoveProductFromOrder(OrderModel existingOrder, OrderInput orderInput) {

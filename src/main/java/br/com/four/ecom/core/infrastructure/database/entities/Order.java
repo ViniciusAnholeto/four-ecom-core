@@ -1,6 +1,5 @@
 package br.com.four.ecom.core.infrastructure.database.entities;
 
-import br.com.four.ecom.core.domains.orders.inputs.OrderInput;
 import br.com.four.ecom.core.domains.orders.models.CreateOrderModel;
 import br.com.four.ecom.core.domains.orders.models.CreatedOrderModel;
 import br.com.four.ecom.core.domains.orders.models.OrderModel;

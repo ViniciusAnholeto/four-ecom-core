@@ -1,7 +1,7 @@
 package br.com.four.ecom.core.infrastructure.errors;
 
-import br.com.four.ecom.core.domains.orders.exceptions.Exceptions;
 import br.com.four.ecom.core.domains.auth.exceptions.Exceptions.UnauthorizedUserException;
+import br.com.four.ecom.core.domains.orders.exceptions.Exceptions;
 import br.com.four.ecom.core.domains.products.exceptions.Exceptions.ProductNotFoundException;
 import br.com.four.ecom.core.infrastructure.errors.models.ErrorDataModel;
 import br.com.four.ecom.core.infrastructure.errors.models.SynchronousErrorModel;

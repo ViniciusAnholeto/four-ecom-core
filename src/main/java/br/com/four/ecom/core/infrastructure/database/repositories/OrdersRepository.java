@@ -1,10 +1,10 @@
 package br.com.four.ecom.core.infrastructure.database.repositories;
 
 import br.com.four.ecom.core.infrastructure.database.entities.Order;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import org.springframework.data.domain.Pageable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;

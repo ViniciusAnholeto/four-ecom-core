@@ -1,7 +1,7 @@
 package br.com.four.ecom.core.infrastructure.api.v1.controllers;
 
-import br.com.four.ecom.core.domains.orders.resources.CreateOrUpdateOrder;
 import br.com.four.ecom.core.domains.orders.resources.CancelOrder;
+import br.com.four.ecom.core.domains.orders.resources.CreateOrUpdateOrder;
 import br.com.four.ecom.core.domains.orders.resources.FindOrder;
 import br.com.four.ecom.core.domains.orders.resources.PayOrder;
 import br.com.four.ecom.core.infrastructure.api.v1.request.OrderRequest;

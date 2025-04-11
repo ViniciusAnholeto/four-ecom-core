@@ -1,9 +1,9 @@
 package br.com.four.ecom.core.domains.orders.usecases;
 
 import br.com.four.ecom.core.domains.orders.enums.OrderStatusEnum;
-import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.OrderPaymentFailedException;
 import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.InvalidOrderStatusException;
 import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.OrderNotFoundException;
+import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.OrderPaymentFailedException;
 import br.com.four.ecom.core.domains.orders.inputs.PaymentInput;
 import br.com.four.ecom.core.domains.orders.models.OrderModel;
 import br.com.four.ecom.core.domains.orders.ports.DatabasePort;
