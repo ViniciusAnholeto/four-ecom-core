@@ -4,7 +4,9 @@ import br.com.four.ecom.core.domains.products.models.ProductModel;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Data
 public class ProductResponse {
@@ -26,5 +28,11 @@ public class ProductResponse {
         this.quantity = model.getQuantity();
         this.createdAt = model.getCreatedAt();
         this.updatedAt = model.getUpdatedAt();
+    }
+
+    public static List<ProductResponse> toList(List<ProductModel> models) {
+        return models.stream()
+                .map(ProductResponse::new)
+                .collect(Collectors.toList());
     }
 }

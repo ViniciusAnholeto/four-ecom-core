@@ -1,9 +1,11 @@
 package br.com.four.ecom.core.domains.products.ports;
 
 import br.com.four.ecom.core.domains.products.inputs.ProductInput;
+import br.com.four.ecom.core.domains.products.inputs.ProductSearchInput;
 import br.com.four.ecom.core.domains.products.models.NewProductModel;
 import br.com.four.ecom.core.domains.products.models.ProductModel;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface DatabasePort {
@@ -14,4 +16,6 @@ public interface DatabasePort {
     ProductModel updateProduct(ProductInput input, ProductModel existingProduct);
 
     void deleteProduct(String id);
+
+    Optional<List<ProductModel>> findProductByFilters(ProductSearchInput input);
 }

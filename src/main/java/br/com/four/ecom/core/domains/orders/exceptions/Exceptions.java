@@ -48,24 +48,17 @@ public class Exceptions {
         }
     }
 
-    public static class ProductsUpdateException extends SynchronousException {
-
-        public ProductsUpdateException(String orderId) {
-            super("ECOM-DO-007", String.format("Products quantity update for order id: %s.", orderId));
-        }
-    }
-
     public static class ProductNotFoundException extends SynchronousException {
 
         public ProductNotFoundException(String productId) {
-            super("ECOM-DO-008", String.format("Product UUID: %s not found.", productId));
+            super("ECOM-DO-007", String.format("Product UUID: %s not found.", productId));
         }
     }
 
     public static class InvalidCommandException extends SynchronousException {
 
         public InvalidCommandException(String command, String orderId) {
-            super("ECOM-DO-009", String.format("Invalid command: %s for order id: %s", command, orderId));
+            super("ECOM-DO-008", String.format("Invalid command: %s for order id: %s", command, orderId));
         }
     }
 

@@ -5,7 +5,6 @@ import br.com.four.ecom.core.domains.orders.enums.OrderStatusEnum;
 import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.InvalidOrderStatusException;
 import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.OrderNotFoundException;
 import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.OrderPaymentFailedException;
-import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.ProductsUpdateException;
 import br.com.four.ecom.core.domains.orders.inputs.CommandInput;
 import br.com.four.ecom.core.domains.orders.models.OrderModel;
 import br.com.four.ecom.core.domains.orders.ports.DatabasePort;
@@ -43,13 +42,5 @@ public class ProcessCommandPay implements HasCommand {
 
         databasePort.updateOrderStatus(existingOrder.getOrderId(),
                 OrderStatusEnum.PAID.name());
-
-        for (var item : existingOrder.getProducts()) {
-            try {
-                databasePort.updateProductDatabase(item.getProductId(), item.getQuantity());
-            } catch (Exception e) {
-                throw new ProductsUpdateException(existingOrder.getOrderId());
-            }
-        }
     }
 }

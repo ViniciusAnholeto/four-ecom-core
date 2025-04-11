@@ -1,12 +1,15 @@
 package br.com.four.ecom.core.infrastructure.api.v1.swaggers;
 
 import br.com.four.ecom.core.infrastructure.api.v1.request.ProductRequest;
+import br.com.four.ecom.core.infrastructure.api.v1.request.ProductSearchRequest;
 import br.com.four.ecom.core.infrastructure.api.v1.response.ProductResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import java.util.List;
 
 @Tag(name = "Produtos")
 public interface ProductsControllerDoc {
@@ -37,7 +40,7 @@ public interface ProductsControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    ProductResponse getProduct(String id);
+    List<ProductResponse> getProduct(ProductSearchRequest id);
 
     @Operation(summary = "Deletar produto",
             description = "Endpoint para deletar um produto no sistema de ecommerce."

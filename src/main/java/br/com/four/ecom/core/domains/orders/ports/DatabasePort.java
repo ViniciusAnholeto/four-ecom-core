@@ -18,8 +18,6 @@ public interface DatabasePort {
 
     Optional<OrderModel> updateOrder(OrderModel existingOrder, OrderInput orderInput);
 
-    void updateProductDatabase(String productId, Integer quantity);
-
     Optional<OrderModel> updateOrderStatus(String orderId, String status);
 
 }

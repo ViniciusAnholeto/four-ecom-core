@@ -16,7 +16,9 @@ public class ProductRequest {
 
     public ProductInput toInput() {
         return ProductInput.builder()
-                .id(Optional.ofNullable(id))
+                .id(id.isBlank()
+                        ? Optional.empty()
+                        : Optional.of(id))
                 .name(name)
                 .price(price)
                 .description(description)

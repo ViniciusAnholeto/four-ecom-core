@@ -5,11 +5,15 @@ import br.com.four.ecom.core.domains.orders.enums.OrderStatusEnum;
 import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.OrderNotFoundException;
 import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.ProductNotFoundException;
 import br.com.four.ecom.core.domains.orders.inputs.OrderInput;
-import br.com.four.ecom.core.domains.orders.models.*;
+import br.com.four.ecom.core.domains.orders.models.CreateOrderModel;
+import br.com.four.ecom.core.domains.orders.models.CreatedOrderModel;
+import br.com.four.ecom.core.domains.orders.models.OrderModel;
+import br.com.four.ecom.core.domains.orders.models.OrderProductsModel;
 import br.com.four.ecom.core.domains.orders.ports.DatabasePort;
 import br.com.four.ecom.core.infrastructure.database.entities.Order;
 import br.com.four.ecom.core.infrastructure.database.entities.Product;
 import br.com.four.ecom.core.infrastructure.database.repositories.OrdersRepository;
+import br.com.four.ecom.core.infrastructure.database.repositories.ProductElasticsearchRepository;
 import br.com.four.ecom.core.infrastructure.database.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +32,7 @@ public class OrdersDatabaseAdapter implements DatabasePort {
 
     private final OrdersRepository ordersRepository;
     private final ProductRepository productRepository;
+    private final ProductElasticsearchRepository productElasticsearchRepository;
 
     @Override
     public CreatedOrderModel createOrder(CreateOrderModel orderModel) {
@@ -127,13 +132,6 @@ public class OrdersDatabaseAdapter implements DatabasePort {
     }
 
     @Override
-    public void updateProductDatabase(String productId, Integer quantity) {
-
-        //esse método vai atualizar a base de produtos e o elasticsearch
-
-    }
-
-    @Override
     public Optional<OrderModel> updateOrderStatus(String orderId, String status) {
         log.info("Updating order status: {} to {}", orderId, status);
 
@@ -144,12 +142,33 @@ public class OrdersDatabaseAdapter implements DatabasePort {
             return Optional.empty();
         }
 
+        updateProductDatabase(orders, status);
+
         orders.forEach(order -> {
             order.setStatus(status);
             ordersRepository.save(order);
         });
 
         return getOrderById(orderId);
+    }
+
+    public void updateProductDatabase(List<Order> orders, String status) {
+        if ("PAID".equalsIgnoreCase(status)) {
+            orders.forEach(order -> {
+                String productId = order.getProductId();
+                int quantityToSubtract = order.getQuantity();
+
+                productRepository.findById(productId).ifPresent(product -> {
+                    product.setQuantity(product.getQuantity() - quantityToSubtract);
+                    productRepository.save(product);
+                });
+
+                productElasticsearchRepository.findById(productId).ifPresent(productDoc -> {
+                    productDoc.setQuantity(productDoc.getQuantity() - quantityToSubtract);
+                    productElasticsearchRepository.save(productDoc);
+                });
+            });
+        }
     }
 
     private void handleAddProductToOrder(OrderModel existingOrder, OrderInput orderInput) {
@@ -227,5 +246,4 @@ public class OrdersDatabaseAdapter implements DatabasePort {
                         .build())
                 .toList();
     }
-
 }

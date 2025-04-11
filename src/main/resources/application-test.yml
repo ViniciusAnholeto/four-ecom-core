@@ -20,6 +20,10 @@ spring:
     secrets: "test"
   config:
     import: optional:configtree:/mnt/secrets-store/
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
   datasource:
     url: 'jdbc:mysql://localhost:3306/testdb'
     username: user
@@ -41,6 +45,13 @@ spring:
       value-deserializer: 'org.springframework.kafka.support.serializer.JsonDeserializer'
     listener:
       ack-mode: manual
+  elasticsearch:
+    rest:
+      uris: 'http://localhost:9200'
+      connection-timeout: 5000
+      read-timeout: 60000
+    indices:
+      auto-create: true
 
 configs:
   kafka:
