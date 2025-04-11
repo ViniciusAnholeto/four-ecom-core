@@ -15,8 +15,8 @@ public class Exceptions {
 
     public static class AverageTicketReportException extends SynchronousException {
 
-        public AverageTicketReportException(Long userId) {
-            super("ECOM-DR-002", String.format("Failed to generate sales report to user: %d", userId));
+        public AverageTicketReportException(String customerId) {
+            super("ECOM-DR-002", String.format("Failed to generate sales report to customer: %s", customerId));
         }
     }
 

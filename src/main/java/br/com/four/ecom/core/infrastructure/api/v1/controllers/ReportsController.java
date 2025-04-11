@@ -3,6 +3,7 @@ package br.com.four.ecom.core.infrastructure.api.v1.controllers;
 import br.com.four.ecom.core.domains.reports.resources.AverageTicketReport;
 import br.com.four.ecom.core.domains.reports.resources.BestBuyersReport;
 import br.com.four.ecom.core.domains.reports.resources.MonthlyReport;
+import br.com.four.ecom.core.infrastructure.api.v1.request.DataRangeRequest;
 import br.com.four.ecom.core.infrastructure.api.v1.request.ReportRequest;
 import br.com.four.ecom.core.infrastructure.api.v1.response.ReportResponse;
 import br.com.four.ecom.core.infrastructure.api.v1.swaggers.ReportsControllerDoc;
@@ -18,15 +19,15 @@ import java.time.LocalDateTime;
 @RequestMapping("/ecom/v1")
 public class ReportsController implements ReportsControllerDoc {
 
-    private AverageTicketReport averageTicketReport;
-    private BestBuyersReport bestBuyersReport;
-    private MonthlyReport monthlyReport;
+    private final AverageTicketReport averageTicketReport;
+    private final BestBuyersReport bestBuyersReport;
+    private final MonthlyReport monthlyReport;
 
     @Override
     @PostMapping("/report")
     public ReportResponse averageTicketReport(@RequestBody ReportRequest reportRequest) {
 
-        log.info("Generating average ticket report for user id: {}", reportRequest.getUserId());
+        log.info("Generating average ticket report for user id: {}", reportRequest.getCustomerId());
 
         return new ReportResponse(averageTicketReport.execute(reportRequest.toInput()));
     }
@@ -43,8 +44,8 @@ public class ReportsController implements ReportsControllerDoc {
     @Override
     @PostMapping("/report/best-buyers/{bestBuyersCount}")
     public ReportResponse bestBuyersReport(@PathVariable Integer bestBuyersCount,
-                                           @RequestBody ReportRequest reportRequest) {
+                                           @RequestBody DataRangeRequest dataRange) {
 
-        return new ReportResponse(bestBuyersReport.execute(bestBuyersCount, reportRequest.toInput()));
+        return new ReportResponse(bestBuyersReport.execute(bestBuyersCount, dataRange.toInput()));
     }
 }

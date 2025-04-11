@@ -32,7 +32,7 @@ public class ProcessCommandCancel implements HasCommand {
             OrderModel existingOrder = orderToCancel.get();
 
             switch (existingOrder.getStatus()) {
-                case OPEN, PAYMENT_PENDING:
+                case PENDING, PAYMENT_PENDING:
                     existingOrder.setStatus(OrderStatusEnum.CANCELLED);
                     break;
                 case PAID, CANCELLED:

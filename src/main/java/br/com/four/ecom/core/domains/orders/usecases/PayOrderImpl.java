@@ -28,7 +28,7 @@ public class PayOrderImpl implements PayOrder {
         if (order.isPresent()) {
             OrderModel existingOrder = order.get();
 
-            if (existingOrder.getStatus().equals(OrderStatusEnum.OPEN)) {
+            if (existingOrder.getStatus().equals(OrderStatusEnum.PENDING)) {
                 existingOrder.setStatus(OrderStatusEnum.PAYMENT_PENDING);
             } else {
                 throw new InvalidOrderStatusException(existingOrder.getStatus().name(), paymentInput.getId());

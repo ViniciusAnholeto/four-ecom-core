@@ -22,7 +22,7 @@ public class AverageTicketReportImpl implements AverageTicketReport {
         Optional<AverageTicketReportModel> averageTicketReport = databasePort.getAverageTicketReport(input);
 
         if (averageTicketReport.isEmpty()) {
-            throw new AverageTicketReportException(input.getUserId());
+            throw new AverageTicketReportException(input.getCustomerId());
         }
 
         return ReportModel.builder()

@@ -9,6 +9,7 @@ import br.com.four.ecom.core.domains.reports.resources.BestBuyersReport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,7 +20,7 @@ public class BestBuyersReportImpl implements BestBuyersReport {
 
     @Override
     public ReportModel execute(Integer bestBuyersCount, ReportInput reportInput) {
-        Optional<BestBuyersReportModel> bestBuyersReport =
+        Optional<List<BestBuyersReportModel>> bestBuyersReport =
                 databasePort.getBestBuyersReport(bestBuyersCount, reportInput);
 
         if (bestBuyersReport.isEmpty()) {

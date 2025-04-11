@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Data
@@ -11,6 +12,6 @@ import java.util.Optional;
 public class ReportModel {
     private LocalDateTime createdAt;
     private Optional<MonthSalesReportModel> monthSalesReport;
-    private Optional<BestBuyersReportModel> bestBuyersReport;
+    private Optional<List<BestBuyersReportModel>> bestBuyersReport;
     private Optional<AverageTicketReportModel> averageTicketReport;
 }

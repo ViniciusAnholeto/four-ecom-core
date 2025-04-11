@@ -1,7 +1,7 @@
 package br.com.four.ecom.core.domains.orders.enums;
 
 public enum OrderStatusEnum {
-    OPEN("OPEN"),
+    PENDING("PENDING"),
     PAID("PAID"),
     CANCELLED("CANCELLED"),
     PAYMENT_PENDING("PAYMENT_PENDING"),;

@@ -1,5 +1,6 @@
 package br.com.four.ecom.core.infrastructure.api.v1.swaggers;
 
+import br.com.four.ecom.core.infrastructure.api.v1.request.DataRangeRequest;
 import br.com.four.ecom.core.infrastructure.api.v1.request.ReportRequest;
 import br.com.four.ecom.core.infrastructure.api.v1.response.ReportResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -51,5 +52,5 @@ public interface ReportsControllerDoc {
             @ApiResponse(responseCode = "422", description = "Em casos de erros interno nao tratados.", content = @Content()),
             @ApiResponse(responseCode = "500", description = "Em casos de erro no processamento do ecom-core.", content = @Content())
     })
-    ReportResponse bestBuyersReport(Integer bestBuyersCount, ReportRequest reportRequest);
+    ReportResponse bestBuyersReport(Integer bestBuyersCount, DataRangeRequest dataRange);
 }

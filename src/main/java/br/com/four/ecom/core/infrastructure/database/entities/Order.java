@@ -55,7 +55,7 @@ public class Order {
         return Order.builder()
                 .orderId(UUID.randomUUID().toString())
                 .customerId(orderModel.getCustomerId())
-                .status("OPEN")
+                .status("PENDING")
                 .productId(productId)
                 .price(price)
                 .quantity(orderModel.getQuantity())
@@ -92,16 +92,7 @@ public class Order {
                 .build();
     }
 
-    private Order createNewOrderEntry(OrderModel existingOrder, Product product, OrderInput orderInput) {
-        return Order.builder()
-                .orderId(existingOrder.getOrderId())
-                .productId(product.getId())
-                .price(product.getPrice())
-                .quantity(orderInput.getProduct().getQuantity())
-                .customerId(existingOrder.getCustomerId())
-                .status(existingOrder.getStatus().name())
-                .createdAt(existingOrder.getCreatedAt())
-                .updatedAt(existingOrder.getUpdatedAt())
-                .build();
+    public Double getTotalValue() {
+        return this.price * this.quantity;
     }
 }

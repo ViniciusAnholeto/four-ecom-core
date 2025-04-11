@@ -33,7 +33,7 @@ public class ProcessCommandPay implements HasCommand {
             case PAYMENT_PENDING:
                 existingOrder.setStatus(OrderStatusEnum.PAID);
                 break;
-            case OPEN, PAID, CANCELLED:
+            case PENDING, PAID, CANCELLED:
                 throw new OrderPaymentFailedException(existingOrder.getOrderId());
             default:
                 throw new InvalidOrderStatusException(existingOrder.getStatus().name(),

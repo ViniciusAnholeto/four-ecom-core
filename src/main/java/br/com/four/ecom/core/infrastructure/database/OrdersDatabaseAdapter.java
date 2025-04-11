@@ -2,6 +2,7 @@ package br.com.four.ecom.core.infrastructure.database;
 
 import br.com.four.ecom.core.domains.orders.enums.OrderOperationEnum;
 import br.com.four.ecom.core.domains.orders.enums.OrderStatusEnum;
+import br.com.four.ecom.core.domains.orders.exceptions.Exceptions;
 import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.OrderNotFoundException;
 import br.com.four.ecom.core.domains.orders.exceptions.Exceptions.ProductNotFoundException;
 import br.com.four.ecom.core.domains.orders.inputs.OrderInput;
@@ -42,6 +43,10 @@ public class OrdersDatabaseAdapter implements DatabasePort {
         if (product.isEmpty()) {
             log.error("Product not found with ID: {}", orderModel.getProductId());
             throw new ProductNotFoundException(orderModel.getProductId());
+        } else if (product.get().getQuantity() < orderModel.getQuantity()) {
+            log.error("Insufficient product quantity for ID: {}", orderModel.getProductId());
+            throw new Exceptions.InsuficientProductQuantityException(orderModel.getProductId(),
+                    product.get().getQuantity());
         }
 
         return ordersRepository.save(Order.newOrder(
@@ -178,6 +183,10 @@ public class OrdersDatabaseAdapter implements DatabasePort {
         if (productOptional.isEmpty()) {
             log.error("Product not found to ADD with ID: {}", productIdToUpdate);
             throw new ProductNotFoundException(productIdToUpdate);
+        } else if (productOptional.get().getQuantity() < orderInput.getProduct().getQuantity()) {
+            log.error("Insufficient product quantity for ID: {}", orderInput.getProduct().getProductId());
+            throw new Exceptions.InsuficientProductQuantityException(orderInput.getProduct().getProductId(),
+                    productOptional.get().getQuantity());
         }
 
         Product product = productOptional.get();

@@ -62,4 +62,13 @@ public class Exceptions {
         }
     }
 
+    public static class InsuficientProductQuantityException extends SynchronousException {
+
+        public InsuficientProductQuantityException(String productId, Integer quantity) {
+            super("ECOM-DO-009",
+                    String.format("Insuficient quantity for product UUID: %s. Available quantity: %d",
+                            productId, quantity));
+        }
+    }
+
 }
